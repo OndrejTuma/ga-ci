@@ -1,0 +1,31 @@
+name: Lint
+
+on:
+  push:
+    branches: [test-typecheck]
+
+jobs:
+  lint:
+    name: Check:Lint
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN_READ_ONLY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17'
+
+      - uses: actions/checkout@v2
+        with:
+          repository: OndrejTuma/gha-tt-playground
+          path: ./.github/actions/
+
+      - uses: ./.github/actions/.github/actions/yarn-install
+
+      - name: Run typescript checks
+        run: yarn lint
