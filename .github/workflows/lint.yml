@@ -27,5 +27,5 @@ jobs:
 
       - uses: ./.github/actions/.github/actions/yarn-install
 
-      - name: Run typescript checks
+      - name: Run lint check
         run: yarn lint
