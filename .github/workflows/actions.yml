@@ -13,4 +13,4 @@ jobs:
           body: Some body
           assignees: |
             OndrejTuma
-      - run: echo "${{ fromJson(steps.outputs.issue) }}"
+      - run: echo ${{ steps.outputs.issue }}

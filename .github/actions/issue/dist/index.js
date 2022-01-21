@@ -8471,25 +8471,30 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(4361)
 const github = __nccwpck_require__(7103)
 
-try {
-  const token = core.getInput('token')
-  const title = core.getInput('title')
-  const body = core.getInput('body')
-  const assignees = core.getInput('assignees')
-  
-  const octokit = new github.GitHub(token)
-  
-  const response = octokit.issues.create({
-    ...github.context.repo,
-    title,
-    body,
-    assignees: assignees ? assignees.split('\n') : undefined
-  })
+async function run() {
+  try {
+    const token = core.getInput('token')
+    const title = core.getInput('title')
+    const body = core.getInput('body')
+    const assignees = core.getInput('assignees')
 
-  core.setOutput('issue', JSON.stringify(response.data))
-} catch (err) {
-  core.setFailed(err.message)
+    const octokit = github.getOctokit(token)
+
+    const response = await octokit.rest.issues.create({
+      ...github.context.repo,
+      title,
+      body,
+      assignees: assignees ? assignees.split('\n') : undefined
+    })
+
+    core.setOutput('issue', JSON.stringify(response.data))
+  } catch (err) {
+    core.setFailed(err.message)
+  }
 }
+
+run()
+
 })();
 
 module.exports = __webpack_exports__;
