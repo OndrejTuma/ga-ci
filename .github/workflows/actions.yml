@@ -1,5 +1,5 @@
 name: Actions
-on: push
+on: workflow_dispatch
 jobs:
   testing-action:
     runs-on: ubuntu-latest
