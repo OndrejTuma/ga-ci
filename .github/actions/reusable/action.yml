@@ -1,0 +1,9 @@
+name: Reusable action
+
+description: Simple reusable action
+
+runs:
+  using: composite
+  steps:
+    - run: echo "its reused!"
+      shell: bash
