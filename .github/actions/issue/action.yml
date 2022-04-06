@@ -1,0 +1,22 @@
+name: 'Open Github Issue'
+author: Ondřej Tůma <tu.ondrej@gmail.com>
+description: 'Opens a Github issue'
+inputs:
+  token:
+    description: 'Github token'
+    required: true
+  title:
+    description: 'Issue title'
+    required: true
+  body:
+    description: 'Issue body'
+    required: false
+  assignees:
+    description: 'Issue assignees'
+    required: false
+outputs:
+  issue:
+    description: 'The issue object as json string'
+runs:
+  using: node12
+  main: 'dist/index.js'
