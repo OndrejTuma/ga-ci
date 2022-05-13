@@ -17,11 +17,10 @@ jobs:
   set:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "inputs ${{ inputs }}"
-      - run: echo "env var ${{ env.TARGET_ENVIRONMET }} and input ${{ inputs.environment }}"
+      - run: echo "env var ${{ env.TARGET_ENVIRONMET }} and input ${{ github.event.inputs.environment }}"
         env:
           TARGET_ENVIRONMET: >
             ${{ fromJson('{
               "Development": "dev",
               "Production": "prod"
-            }')[inputs.environment] }}
+            }')[github.event.inputs.environment] }}
