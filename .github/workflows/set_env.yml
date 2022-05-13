@@ -23,4 +23,4 @@ jobs:
           "Production": "prod"
         }')[inputs.environment] }}
     steps:
-      - run: echo "env var ${env.TARGET_ENVIRONMET} and output ${{ steps.outputs.environment }}"
+      - run: echo "env var ${{ env.TARGET_ENVIRONMET }}"
