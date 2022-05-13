@@ -1,0 +1,26 @@
+name: Set Env
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        type: choice
+        description: Environment
+        options:
+          - Development
+          - QA
+          - UAT
+          - Production
+
+jobs:
+  set:
+    runs-on: ubuntu-latest
+    env:
+      TARGET_ENVIRONMET: >
+        ${{ fromJson('{
+          "Development": "dev",
+          "Production": "prod"
+        }')[inputs.environment] }}
+    steps:
+      - run: echo "env var ${env.TARGET_ENVIRONMET} and output ${{ steps.outputs.environment }}"
