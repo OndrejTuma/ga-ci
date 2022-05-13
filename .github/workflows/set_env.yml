@@ -16,11 +16,11 @@ on:
 jobs:
   set:
     runs-on: ubuntu-latest
-    env:
-      TARGET_ENVIRONMET: >
-        ${{ fromJson('{
-          "Development": "dev",
-          "Production": "prod"
-        }')[inputs.environment] }}
     steps:
       - run: echo "env var ${{ env.TARGET_ENVIRONMET }}"
+        env:
+          TARGET_ENVIRONMET: >
+            ${{ fromJson('{
+              "Development": "dev",
+              "Production": "prod"
+            }')[inputs.environment] }}
