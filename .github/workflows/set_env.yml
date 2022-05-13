@@ -16,11 +16,27 @@ on:
 jobs:
   set:
     runs-on: ubuntu-latest
+    env:
+      TARGET_ENVIRONMET: >
+        ${{ fromJson('{
+          "Development": "dev",
+          "Production": "prod"
+        }')[github.event.inputs.environment] }}
     steps:
-      - run: echo "env var ${{ env.TARGET_ENVIRONMET }} and input ${{ github.event.inputs.environment }}"
-        env:
-          TARGET_ENVIRONMET: >
-            ${{ fromJson('{
-              "Development": "dev",
-              "Production": "prod"
-            }')[github.event.inputs.environment] }}
+      - uses: kanga333/variable-mapper@master
+        id: export
+        with:
+          key: "${{ github.event.inputs.environment }}"
+          map: |
+            {
+              "Development": {
+                "environment": "dev"
+              },
+              "Production": {
+                "environment": "prod"
+              }
+            }
+          export_to: env,output
+
+      - run: echo "env var ${{ env.TARGET_ENVIRONMET }} and other ${{ env.environment }}"
+
