@@ -38,5 +38,5 @@ jobs:
             }
           export_to: env,output
 
-      - run: echo "env var ${{ env.TARGET_ENVIRONMET }} and other ${{ env.environment }}"
+      - run: echo "env var $TARGET_ENVIRONMET and other $environment"
 
