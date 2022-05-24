@@ -1,0 +1,40 @@
+name: GH-72362667
+
+on: pull_request
+
+jobs:
+  updatelist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Generate markdown file
+        run: echo "### Nice and easy file numero due" > test.md
+
+      - name: Create new Branch
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          message: 'Add cool markdown file'
+          new_branch: markdown/new-file
+          push: origin markdown/new-file --set-upstream --force
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: "[Misc] Update repository admin list documentation"
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          base: main
+          branch: markdown/new-files
+          title: '[Misc] Update repository admin list documentation'
+          body: |
+            Workflow script has made changes to admin list
+          reviewers: someuser
+          draft: false
