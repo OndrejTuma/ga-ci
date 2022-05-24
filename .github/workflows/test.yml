@@ -1,0 +1,34 @@
+name: Test
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - id: test
+        run: echo "::set-output name=value::"
+    outputs:
+      jenkins_job_url: ${{ steps.test.outputs.value }}
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - id: test
+        run: echo "::set-output name=value::"
+    outputs:
+      jenkins_job_url: ${{ steps.test.outputs.value }}
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - deploy
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/issue
+        env:
+          FAILURE_URL: ${{ needs.deploy.outputs.jenkins_job_url || needs.build.outputs.jenkins_job_url }}
+          FALLBACK_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          token: ${{ github.token }}
+          title: "this is it: ${{ env.FAILURE_URL || env.FALLBACK_URL }}"
