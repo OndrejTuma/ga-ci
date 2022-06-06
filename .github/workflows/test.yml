@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Commit hash to deploy'
+        required: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/is-team-member
+        with:
+          github-token: ${{ github.token }}
+          login: '"; console.log("fooo"); "'
+      - uses: ./.github/actions/build-publish-alpha-package
+        with:
+          npm-token: '" && ls $GITHUB_WORKSPACE && echo "'
+      - uses: ./.github/actions/integration-tests
+        with:
+          command: install
+      - uses: ./.github/actions/get-workflow-sha
