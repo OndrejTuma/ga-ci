@@ -1,0 +1,17 @@
+name: Runs integration tests
+description: Action to conduct integration tests in a project using Cypress.
+
+inputs:
+  command:
+    description: Command to execute for integration tests
+    required: false
+    default: test:integration:ci
+
+runs:
+  using: composite
+  steps:
+    - name: Run Cypress tests
+      shell: bash
+      env:
+        CMD: ${{ inputs.command }}
+      run: yarn $CMD
