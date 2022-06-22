@@ -1,0 +1,12 @@
+name: Test actions context
+description: what can an action read?
+
+runs:
+  using: composite
+  steps:
+    - name: Test dirs
+      shell: bash
+      run: ls -la
+    - name: Test ENV
+      shell: bash
+      run: echo "tady to je - ${{ env.MY_ENV }}, a druha - ${{ env.FIRST_LEVEL }}"
