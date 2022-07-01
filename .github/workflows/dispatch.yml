@@ -26,4 +26,4 @@ jobs:
         run: |
           echo "Workflow triggered successfully"
           git status
-          echo ls -l
+          ls -l
