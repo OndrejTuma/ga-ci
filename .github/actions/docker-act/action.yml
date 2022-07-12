@@ -1,0 +1,7 @@
+name: 'Yarn install'
+
+description: 'install dependencies'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
