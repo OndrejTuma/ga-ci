@@ -7,7 +7,8 @@
     "export": "next export",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "print:stuff": "echo Hey man this is bullshit!!"
   },
   "dependencies": {
     "@actions/core": "^1.6.0",
